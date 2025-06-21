@@ -21,5 +21,6 @@
     <string name="encrypted_message">Encrypted Message</string>
     <string name="decrypted_output">Decrypted Output</string>
     <string name="accessibility_service_description">Silent email automation service using Gmail</string>
+    <string name="sms_accessibility_service_description">Accessibility service for sending SMS silently</string>
 
 </resources>
