@@ -33,45 +33,43 @@ SilentGuard follows the **Model-View-Controller (MVC)** architecture:
 com.example.silentguardapp
 |
 |-- controller/       # Handles app logic and coordination between services and UI
-|   |-- AudioController.kt         # Manages audio recording logic
-|   |-- EventController.kt         # Controls event lifecycle (start/stop recording)
-|   |-- MessageController.kt       # Creates and encodes encrypted messages
-|   |-- MonitoringController.kt    # Oversees noise threshold detection and service start
-|   |-- NotifierController.kt      # Sends messages to emergency contacts
-|   |-- SettingsController.kt      # (Planned) Manage settings logic
+|   |-- AudioController.kt         # Manages audio recording lifecycle and buffer
+|   |-- EventController.kt         # Coordinates full flow from detection to delivery
+|   |-- MessageController.kt       # Creates messages and encodes using zero-width characters
+|   |-- MonitoringController.kt    # Monitors audio levels and triggers emergency events
+|   |-- NotifierController.kt      # Dispatches messages to contact (email/SMS)
 |
-|-- model/            # Data classes (POJOs) used across app
-|   |-- AudioRecordModel.kt
-|   |-- ContactModel.kt
-|   |-- EncryptedMessageModel.kt
-|   |-- EventModel.kt
-|   |-- AppSettingsModel.kt
+|-- model/            # Pure data classes shared across layers
+|   |-- AudioRecordModel.kt        # Stores audio file path and duration
+|   |-- ContactModel.kt            # Stores contact name, phone, email
+|   |-- EncryptedMessageModel.kt   # Combines raw and encoded text
+|   |-- EventModel.kt              # Represents a complete emergency event
+|   |-- AppSettingsModel.kt        # Holds user-defined configuration
 |
-|-- services/         # Background services for real-time tasks
-|   |-- AudioService.kt            # Placeholder for low-level recording
-|   |-- EventService.kt            # Interfaces with controller to manage full event
-|   |-- GmailAutomationService.kt  # Automates sending email using Accessibility
-|   |-- SmsAutomationService.kt    # Automates sending SMS using Accessibility
-|   |-- MessageService.kt          # Handles message formatting and delivery
-|   |-- MonitoringService.kt       # Audio monitoring using AudioRecord
-|   |-- NotifierService.kt         # Sends data to selected contact
+|-- services/         # Background tasks, long-running actions
+|   |-- EventService.kt            # Orchestrates emergency event creation
+|   |-- GmailAutomationService.kt  # Automates Gmail UI to send email
+|   |-- SmsAutomationService.kt    # Automates Messages UI to send SMS
+|   |-- MessageService.kt          # Formats and encrypts messages
+|   |-- MonitoringService.kt       # Captures ambient sound and triggers controller
+|   |-- NotifierService.kt         # Routes final message to delivery method
 |
-|-- utils/            # Utility and helper classes
-|   |-- PreferencesManager.kt      # Reads/writes user settings and events to storage
-|   |-- SpeechToTextConverter.kt   # Handles Google API speech recognition
+|-- utils/            # Shared logic across layers
+|   |-- PreferencesManager.kt      # Manages local storage of settings/events
+|   |-- SpeechToTextConverter.kt   # Integrates Google API for transcriptions
 |
-|-- views/            # Fragments responsible for the UI layer
-|   |-- HomeFragment.kt            # Starts/stops monitoring, status display
-|   |-- SettingsFragment.kt        # UI for app preferences
-|   |-- DecoderFragment.kt         # Tool to decode received hidden messages
+|-- views/            # Fragments for each screen (UI only)
+|   |-- HomeFragment.kt            # Displays current status and buttons
+|   |-- SettingsFragment.kt        # UI for noise level, contact, message settings
+|   |-- DecoderFragment.kt         # UI to paste and decode received message
 |
-|-- res/layout/       # Layout files for each fragment/activity
+|-- res/layout/       # XML layout definitions
 |   |-- activity_main.xml
 |   |-- fragment_home.xml
 |   |-- fragment_settings.xml
 |   |-- fragment_decoder.xml
 |
-|-- MainActivity.kt   # Hosts the navigation between fragments using BottomNavigationView
+|-- MainActivity.kt   # Hosts navigation via BottomNavigationView
 ```
 
 ---
@@ -101,11 +99,30 @@ To use Google Speech-to-Text:
 
 Below are key screens from the application:
 
-| Home Screen | Settings Screen | Decoder Screen |
-| ----------- | --------------- | -------------- |
-|             |                 |                |
+### 🏠 Home Screen
 
-> ✅ **Tip:** Save your images in a `/screenshots/` folder and reference them using relative paths. Resize them to \~400–500px width for best display.
+* Monitoring mode (active/inactive)
+* Triggering audio analysis
+
+![Home Active](screenshots/Home%20page%20active.jpg)
+![Home Inactive](screenshots/Home%20page%20inactive.jpg)
+
+### ⚙️ Settings Screen
+
+* Noise threshold
+* Emergency contact
+* Covert message configuration
+
+![Settings 1](screenshots/Settings%20screen%201.jpg)
+![Settings 2](screenshots/Settings%20screen%202.jpg)
+
+### 🧩 Decoder Screen
+
+* Paste encrypted message and reveal decoded output
+
+![Decoder](screenshots/Decoder%20Screen.jpg)
+
+> ✅ **Tip:** Store screenshots in `/screenshots/`, use relative Markdown paths and resize to \~500px width for optimal GitHub display.
 
 ---
 
@@ -134,13 +151,13 @@ app/src/main/assets/
 3. Build and run the project on a real device (not an emulator).
 4. On first launch, grant the following permissions:
 
-    * `RECORD_AUDIO`
-    * `SEND_SMS`
-    * `POST_NOTIFICATIONS`
-    * Accessibility access for:
+   * `RECORD_AUDIO`
+   * `SEND_SMS`
+   * `POST_NOTIFICATIONS`
+   * Accessibility access for:
 
-        * `GmailAutomationService`
-        * `SmsAutomationService`
+      * `GmailAutomationService`
+      * `SmsAutomationService`
 
 ---
 
