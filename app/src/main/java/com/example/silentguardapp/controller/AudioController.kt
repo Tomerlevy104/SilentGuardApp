@@ -42,32 +42,4 @@ class AudioController(private val audioService: AudioService) {
     fun convertAudioToText(audioRecord: AudioRecordModel): String {
         return audioService.convertAudioToText(audioRecord)
     }
-
-    /**
-     * Save audio to event
-     */
-    fun saveAudioToEvent(eventId: String, audioRecord: AudioRecordModel): Boolean {
-        return audioService.saveAudioToEvent(eventId, audioRecord)
-    }
-
-    /**
-     * Delete audio file
-     */
-    fun deleteAudioFile(audioRecord: AudioRecordModel): Boolean {
-        return audioService.deleteAudioFile(audioRecord)
-    }
-
-    /**
-     * Clean old files
-     */
-    fun cleanOldAudioFiles(): Int {
-        return audioService.cleanOldAudioFiles()
-    }
-
-    /**
-     * Force stop recording
-     */
-    fun forceStopRecording(): Boolean {
-        return audioService.forceStopRecording()
-    }
 }

@@ -34,6 +34,10 @@
     <string name="emergency_contact">Emergency Contact</string>
     <string name="noise_detection_sensitivity">Noise Detection Sensitivity</string>
     <string name="app_settings">App Settings</string>
-    <string name="fast_share">שיתוף מהיר</string>
+    <string name="fast_share">Fast share</string>
+    <string name="send_heb">שליחה</string>
+    <string name="nav">ניווט</string>
+    <string name="up">למעלה</string>
+    <string name="smsto">smsto:%1$s</string>
 
 </resources>

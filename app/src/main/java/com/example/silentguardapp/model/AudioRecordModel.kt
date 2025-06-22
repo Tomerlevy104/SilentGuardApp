@@ -1,6 +1,6 @@
 package com.example.silentguardapp.model
 
-/*
+/**
 * Audio Record Model
 */
 data class AudioRecordModel(

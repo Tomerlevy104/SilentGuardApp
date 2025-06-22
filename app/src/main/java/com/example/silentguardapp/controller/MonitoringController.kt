@@ -31,7 +31,7 @@ class MonitoringController(private val context: Context) {
                 putExtra(MonitoringService.EXTRA_THRESHOLD, threshold)
             }
 
-            context.startForegroundService(intent) // Start foreground service - monitoring background
+            context.startForegroundService(intent) // ! ! ! Start foreground service - monitoring background ! ! !
             isMonitoringActive = true
 
             Log.d("MonitoringController", "Monitoring started with threshold: $threshold")
@@ -74,58 +74,5 @@ class MonitoringController(private val context: Context) {
      */
     fun isMonitoringActive(): Boolean {
         return isMonitoringActive
-    }
-
-    /**
-     * Get current noise threshold
-     */
-    fun getCurrentThreshold(): Float {
-        return defaultThreshold
-    }
-
-    /**
-     * Update noise threshold (will restart monitoring if active)
-     */
-    fun updateThreshold(newThreshold: Float): Boolean {
-        return try {
-            val validThreshold = newThreshold.coerceIn(0f, 1f)
-
-            if (isMonitoringActive) {
-                // Restart monitoring with new threshold
-                stopMonitoring()
-                Thread.sleep(100) // Small delay to ensure service stops
-                startMonitoring(validThreshold)
-            } else {
-                // Just update the threshold for next start
-                defaultThreshold = validThreshold
-            }
-
-            Log.i("MonitoringController", "Threshold updated to: $validThreshold")
-            true
-
-        } catch (e: Exception) {
-            Log.e("MonitoringController", "Failed to update threshold: ${e.message}")
-            false
-        }
-    }
-
-    /**
-     * Force stop monitoring (emergency stop)
-     */
-    fun forceStopMonitoring(): Boolean {
-        return try {
-            isMonitoringActive = false
-            val intent = Intent(context, MonitoringService::class.java).apply {
-                action = MonitoringService.ACTION_STOP_MONITORING
-            }
-            context.startService(intent)
-
-            Log.w("MonitoringController", "Monitoring force stopped")
-            true
-
-        } catch (e: Exception) {
-            Log.e("MonitoringController", "Failed to force stop monitoring: ${e.message}")
-            false
-        }
     }
 }

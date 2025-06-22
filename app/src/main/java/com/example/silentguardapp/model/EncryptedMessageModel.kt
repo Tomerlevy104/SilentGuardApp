@@ -1,6 +1,6 @@
 package com.example.silentguardapp.model
 
-/*
+/**
 * Encrypted Message Model
 */
 data class EncryptedMessageModel(

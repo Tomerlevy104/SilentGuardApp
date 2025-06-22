@@ -4,16 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import com.example.silentguardapp.R
 import com.example.silentguardapp.model.ContactModel
 
+/**
+ * Notifier Service
+ */
 class NotifierService(private val context: Context) {
-
 
     fun sendSms(contact: ContactModel, message: String): Boolean {
         try {
             if (contact.phoneNumber.isNullOrBlank()) return false
 
-            val smsUri = Uri.parse("smsto:${contact.phoneNumber}")
+            val smsUri = Uri.parse(context.getString(R.string.smsto, contact.phoneNumber))
             val smsIntent = Intent(Intent.ACTION_SENDTO, smsUri).apply {
                 putExtra("sms_body", message)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK

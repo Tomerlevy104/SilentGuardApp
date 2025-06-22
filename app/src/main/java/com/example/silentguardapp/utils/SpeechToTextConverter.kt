@@ -69,7 +69,6 @@ class SpeechToTextConverter(private val context: Context) {
             "Emergency situation detected - unable to transcribe audio"
 
         } catch (e: Exception) {
-            // Log error and return fallback message
             Log.d("AudioService", "Speech-to-Text error: ${e.message}", e)
             "Emergency situation - transcription failed: ${e.message}"
         }

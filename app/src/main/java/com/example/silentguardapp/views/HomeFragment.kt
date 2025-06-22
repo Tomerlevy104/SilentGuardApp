@@ -35,12 +35,11 @@ class HomeFragment : Fragment() {
     private val requestMicPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
-//        if (!isGranted) {
-//            Toast.makeText(requireContext(), getString(R.string.microphone_permission_is_required), Toast.LENGTH_LONG).show()
-//        }
+        Log.w("HomeFragment", getString(R.string.microphone_permission_is_required))
         checkAllPermissionsAndStartMonitoring()
     }
 
+    // Permission launcher for notification access
     private val requestNotificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -50,11 +49,16 @@ class HomeFragment : Fragment() {
         checkAllPermissionsAndStartMonitoring()
     }
 
+    // Permission launcher for SMS access
     private val requestSmsPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (!isGranted) {
-            Toast.makeText(requireContext(), "SMS permission is required for emergency alerts", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "SMS permission is required for emergency alerts",
+                Toast.LENGTH_SHORT
+            ).show()
         }
         checkAllPermissionsAndStartMonitoring()
     }
@@ -106,14 +110,15 @@ class HomeFragment : Fragment() {
         ) == PackageManager.PERMISSION_GRANTED
 
         // Check notifications permission
-        val hasNotificationPermission = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
+        val hasNotificationPermission =
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED
+            } else {
+                true
+            }
 
         // Check SMS permission
         val hasSmsPermission = ContextCompat.checkSelfPermission(
@@ -122,7 +127,6 @@ class HomeFragment : Fragment() {
         ) == PackageManager.PERMISSION_GRANTED
 
         // Check contact settings
-
         val hasContact = preferencesManager.hasEmergencyContact()
         Log.d("HomeFragment", "Has contact: $hasContact")
 
@@ -174,41 +178,33 @@ class HomeFragment : Fragment() {
      * Checks if the GmailAutomationService accessibility service is enabled.
      */
     private fun isAccessibilityServiceEnabled(): Boolean {
-        val expectedComponent = ComponentName(requireContext(), com.example.silentguardapp.services.GmailAutomationService::class.java)
+        // Define the expected component name (package + class) of the service we want to check
+        val expectedComponent = ComponentName(
+            requireContext(),
+            com.example.silentguardapp.services.GmailAutomationService::class.java
+        )
+
+        // Get the system setting that lists all enabled accessibility services (colon-separated)
         val enabledServicesSetting = Settings.Secure.getString(
             requireContext().contentResolver,
             Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
-        ) ?: return false
+        ) ?: return false  // Return false if no services are enabled
 
+        // Split the string by colon to get individual ComponentName strings
         val colonSplitter = TextUtils.SimpleStringSplitter(':')
         colonSplitter.setString(enabledServicesSetting)
 
+        // Iterate through all enabled service names
         for (service in colonSplitter) {
+            // Convert string to ComponentName and compare with expected component
             if (ComponentName.unflattenFromString(service) == expectedComponent) {
-                return true
+                return true  // Found a match, the service is enabled
             }
         }
+
+        // Service was not found in the enabled list
         return false
     }
-
-    /**
-     * Prompts user to enable the accessibility service if not active.
-     */
-    private fun checkAccessibilityService() {
-        if (!isAccessibilityServiceEnabled()) {
-            Toast.makeText(
-                requireContext(),
-                "Accessibility service is not enabled. Please enable it for automatic Gmail sending.",
-                Toast.LENGTH_LONG
-            ).show()
-
-            // Opens the device Accessibility Settings screen
-            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-            startActivity(intent)
-        }
-    }
-
-
 
     private fun startMonitoringProcess() {
         val thresholdFromSettings = preferencesManager.loadAppSettings().noiseThreshold
@@ -216,13 +212,20 @@ class HomeFragment : Fragment() {
         val successStart = monitoringController.startMonitoring(thresholdFromSettings)
 
         if (successStart) {
-            Log.d("HomeFragment", "Monitoring started successfully with threshold $thresholdFromSettings")
-            Toast.makeText(requireContext(),
-                getString(R.string.monitoring_started_successfully), Toast.LENGTH_SHORT).show()
+            Log.d(
+                "HomeFragment",
+                "Monitoring started successfully with threshold $thresholdFromSettings"
+            )
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.monitoring_started_successfully), Toast.LENGTH_SHORT
+            ).show()
         } else {
             Log.e("HomeFragment", "Failed to start monitoring")
-            Toast.makeText(requireContext(),
-                getString(R.string.error_starting_monitoring), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.error_starting_monitoring), Toast.LENGTH_SHORT
+            ).show()
         }
 
         updateUI()
@@ -234,14 +237,17 @@ class HomeFragment : Fragment() {
 
         if (successStop) {
             Log.d("HomeFragment", "Monitoring stopped successfully")
-            Toast.makeText(requireContext(),
-                getString(R.string.monitoring_stopped), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.monitoring_stopped), Toast.LENGTH_SHORT
+            ).show()
         } else {
             Log.e("HomeFragment", "Failed to stop monitoring")
-            Toast.makeText(requireContext(),
-                getString(R.string.error_in_stopping_monitoring), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.error_in_stopping_monitoring), Toast.LENGTH_SHORT
+            ).show()
         }
-
         updateUI()
     }
 
@@ -256,10 +262,20 @@ class HomeFragment : Fragment() {
 
         // Update status text color and indicator
         if (isActive) {
-            statusText.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_green_dark))
+            statusText.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    android.R.color.holo_green_dark
+                )
+            )
             statusIndicator.setBackgroundResource(R.drawable.circle_green)
         } else {
-            statusText.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark))
+            statusText.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    android.R.color.holo_red_dark
+                )
+            )
             statusIndicator.setBackgroundResource(R.drawable.circle_red)
         }
 
@@ -274,11 +290,5 @@ class HomeFragment : Fragment() {
         super.onResume()
         // Update UI when returning to fragment
         updateUI()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        // Optional: Stop monitoring when fragment is destroyed
-        // monitoringController.forceStopMonitoring()
     }
 }

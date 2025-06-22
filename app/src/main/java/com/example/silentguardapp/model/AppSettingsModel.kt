@@ -1,6 +1,6 @@
 package com.example.silentguardapp.model
 
-/*
+/**
 * App Setting Model
 */
 data class AppSettingsModel(

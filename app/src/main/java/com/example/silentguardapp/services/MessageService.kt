@@ -1,11 +1,15 @@
 package com.example.silentguardapp.services
 
+/**
+ * MessageService - business logic
+ */
 class MessageService {
+
     /**
      * Encodes transcribed text using Zero Width characters
      * and hides it inside the user-defined cover message.
-     * @param transcribedText The actual text captured from audio
-     * @param coverMessage The message defined in settings to hide the text in
+     * transcribedText = The actual text captured from audio
+     * coverMessage = The message defined in settings to hide the text in
      */
     fun generateCoverMessage(transcribedText: String, coverMessage: String): String {
         val binary =
@@ -30,8 +34,7 @@ class MessageService {
 
     /**
      * Decodes a Zero Width-encoded message back into its original text.
-     *
-     * @param encodedMessage The full message with cover text and hidden binary
+     * encodedMessage = The full message with cover text and hidden binary
      * @return The decoded hidden message (original transcribed text)
      */
     fun decodeCoverMessage(encodedMessage: String): String {
@@ -54,7 +57,7 @@ class MessageService {
             .mapNotNull { byteStr ->
                 byteStr.toIntOrNull(2)?.toByte()
             }
-
+        
         return bytes.toByteArray().toString(Charsets.UTF_8)
     }
 }

@@ -42,7 +42,6 @@ class SettingsFragment : Fragment() {
         contactPhoneInput = view.findViewById(R.id.contactPhoneInput)
         contactEmailInput = view.findViewById(R.id.contactEmailInput)
         coverMessageInput = view.findViewById(R.id.coverMessageInput)
-
         contactEmailLayout = view.findViewById(R.id.contactEmailLayout)
         contactPhoneLayout = view.findViewById(R.id.contactPhoneLayout)
 
@@ -52,7 +51,6 @@ class SettingsFragment : Fragment() {
         }
 
         preferencesManager = PreferencesManager(requireContext())
-
         loadSettings()
 
         return view

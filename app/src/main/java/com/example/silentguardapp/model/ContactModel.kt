@@ -1,6 +1,6 @@
 package com.example.silentguardapp.model
 
-/*
+/**
 * Contact Model
 */
 data class ContactModel(

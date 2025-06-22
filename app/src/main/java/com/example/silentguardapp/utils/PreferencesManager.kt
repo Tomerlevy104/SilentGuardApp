@@ -27,14 +27,14 @@ class PreferencesManager(private val context: Context) {
      * Save app settings
      */
     fun saveAppSettings(settings: AppSettingsModel): Boolean {
-        return try {
+        try {
             val json = gson.toJson(settings)
             sharedPreferences.edit()
                 .putString(KEY_APP_SETTINGS, json)
                 .apply()
-            true
+            return true
         } catch (e: Exception) {
-            false
+            return false
         }
     }
 
@@ -57,10 +57,10 @@ class PreferencesManager(private val context: Context) {
     /**
      * Get default app settings
      */
-     fun getDefaultAppSettings(): AppSettingsModel {
+    private fun getDefaultAppSettings(): AppSettingsModel {
         return AppSettingsModel(
             noiseThreshold = 0.7f,
-            recordingDuration = 30,
+            recordingDuration = 15,
             emergencyContact = ContactModel(
                 name = "",
                 phoneNumber = null,
@@ -74,7 +74,7 @@ class PreferencesManager(private val context: Context) {
      * Save emergency event
      */
     fun saveEmergencyEvent(event: EventModel): Boolean {
-        return try {
+        try {
             val events = loadAllEvents().toMutableList()
 
             // Remove existing event with same ID if exists
@@ -90,9 +90,9 @@ class PreferencesManager(private val context: Context) {
             sharedPreferences.edit()
                 .putString(KEY_EVENTS, json)
                 .apply()
-            true
+            return true
         } catch (e: Exception) {
-            false
+            return false
         }
     }
 
@@ -125,123 +125,6 @@ class PreferencesManager(private val context: Context) {
     }
 
     /**
-     * Delete emergency event
-     */
-    fun deleteEvent(eventId: String): Boolean {
-        return try {
-            val events = loadAllEvents().toMutableList()
-            val removed = events.removeAll { it.id == eventId }
-
-            if (removed) {
-                val json = gson.toJson(events)
-                sharedPreferences.edit()
-                    .putString(KEY_EVENTS, json)
-                    .apply()
-            }
-
-            removed
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    /**
-     * Save audio record for specific event
-     */
-    fun saveAudioRecordForEvent(eventId: String, audioRecord: AudioRecordModel): Boolean {
-        return try {
-            val event = getEventById(eventId)
-            if (event != null) {
-                val updatedEvent = event.copy(audioRecord = audioRecord)
-                saveEmergencyEvent(updatedEvent)
-            } else {
-                false
-            }
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    /**
-     * Get recent events (limited number)
-     */
-    fun getRecentEvents(limit: Int = 10): List<EventModel> {
-        return try {
-            loadAllEvents()
-                .sortedByDescending { it.timestamp }
-                .take(limit)
-        } catch (e: Exception) {
-            emptyList()
-        }
-    }
-
-    /**
-     * Clear all events
-     */
-    fun clearAllEvents(): Boolean {
-        return try {
-            sharedPreferences.edit()
-                .remove(KEY_EVENTS)
-                .apply()
-            true
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    /**
-     * Get audio storage directory
-     */
-    private fun getAudioStorageDirectory(): String {
-        val audioDir = File(context.filesDir, AUDIO_DIR_NAME)
-        if (!audioDir.exists()) {
-            audioDir.mkdirs()
-        }
-        return audioDir.absolutePath
-    }
-
-    /**
-     * Clean old events (older than specified days)
-     */
-    fun cleanOldEvents(maxAgeDays: Int = 7): Int {
-        return try {
-            val cutoffTime = System.currentTimeMillis() - (maxAgeDays * 24 * 60 * 60 * 1000L)
-            val allEvents = loadAllEvents()
-            val recentEvents = allEvents.filter { it.timestamp >= cutoffTime }
-            val deletedCount = allEvents.size - recentEvents.size
-
-            if (deletedCount > 0) {
-                val json = gson.toJson(recentEvents)
-                sharedPreferences.edit()
-                    .putString(KEY_EVENTS, json)
-                    .apply()
-            }
-
-            deletedCount
-        } catch (e: Exception) {
-            0
-        }
-    }
-
-    /**
-     * Get total storage usage
-     */
-    fun getTotalStorageUsage(): Long {
-        return try {
-            val audioDir = File(getAudioStorageDirectory())
-            var totalSize = 0L
-
-            audioDir.listFiles()?.forEach { file ->
-                totalSize += file.length()
-            }
-
-            totalSize
-        } catch (e: Exception) {
-            0L
-        }
-    }
-
-    /**
      * Check if emergency contact is configured
      */
     fun hasEmergencyContact(): Boolean {
@@ -249,32 +132,7 @@ class PreferencesManager(private val context: Context) {
             val settings = loadAppSettings()
             val contact = settings.emergencyContact
             contact.name.isNotBlank() &&
-            (!contact.phoneNumber.isNullOrBlank() && !contact.email.isNullOrBlank())
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    /**
-     * Update only the emergency contact
-     */
-    fun updateEmergencyContact(contact: ContactModel): Boolean {
-        return try {
-            val currentSettings = loadAppSettings()
-            val updatedSettings = currentSettings.copy(emergencyContact = contact)
-            saveAppSettings(updatedSettings)
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    /**
-     * Reset all settings to default
-     */
-    fun resetToDefaults(): Boolean {
-        return try {
-            sharedPreferences.edit().clear().apply()
-            true
+                    (!contact.phoneNumber.isNullOrBlank() && !contact.email.isNullOrBlank())
         } catch (e: Exception) {
             false
         }

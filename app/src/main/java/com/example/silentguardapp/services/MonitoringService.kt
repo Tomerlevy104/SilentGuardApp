@@ -14,8 +14,7 @@ import kotlin.math.log10
 import kotlin.math.sqrt
 
 /**
- * MonitoringService - Background noise monitoring service using AudioRecord
- * Purpose: Monitor noise level and create emergency events when threshold is crossed
+ * MonitoringService - Monitor noise level and create emergency events when threshold is crossed
  */
 class MonitoringService : Service() {
 
@@ -40,7 +39,6 @@ class MonitoringService : Service() {
         createNotificationChannel()
         audioController = AudioController(AudioService(this))
         eventController = EventController(applicationContext)
-
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -74,7 +72,7 @@ class MonitoringService : Service() {
             val notification = createNotification()
             startForeground(NOTIFICATION_ID, notification)
             isMonitoring = true
-            startEventDetection()
+            startEventDetection() // Starting detect noise
             Log.d("MonitoringService", "Background monitoring started with threshold: $threshold")
 
         } catch (e: Exception) {
@@ -202,18 +200,17 @@ class MonitoringService : Service() {
                 // Start recording audio for this event
                 val recordingStarted = eventController.startRecordingForEvent(event.id)
                 if (recordingStarted) {
-                    Log.i("MonitoringService", "Recording started for event: ${event.id}")
+                    Log.d("MonitoringService", "Recording started for event: ${event.id}")
                 } else {
                     Log.e("MonitoringService", "Failed to start recording for event: ${event.id}")
                     stopMonitoring()
                     return@launch
                 }
 
-                // Wait for the recording to complete (30 seconds)
-//                 delay(30_000)
+                // Wait for the recording to complete (TIMEOFREC seconds)
                 delay(TIMEOFREC)
 
-                // Finalize the event: stop recording and transcribe the audio
+                // Finalize the event, stop recording and transcribe the audio
                 val finalized = eventController.finalizeEvent(event.id)
                 if (finalized) {
                     Log.i("MonitoringService", "Event finalized successfully: ${event.id}")
@@ -222,7 +219,6 @@ class MonitoringService : Service() {
                 }
 
             } catch (e: Exception) {
-                // Log any unexpected errors during emergency handling
                 Log.e("MonitoringService", "Error handling emergency: ${e.message}", e)
             } finally {
                 // Always stop monitoring once emergency handling is done

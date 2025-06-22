@@ -19,6 +19,9 @@ class EventService(private val context: Context) {
     private val messageController = MessageController(context)
     private val preferencesManager = PreferencesManager(context)
 
+    /**
+     * Create emergency event
+     */
     fun createEmergencyEvent(): EventModel {
         val event = EventModel(
             id = UUID.randomUUID().toString(),
@@ -33,13 +36,17 @@ class EventService(private val context: Context) {
         return event
     }
 
+    /**
+     * Start recording for event function
+     */
     fun startRecordingForEvent(eventId: String): Boolean {
         return audioController.startRecording(eventId)
     }
 
-    /*
-    * Finalize event function
-    */
+    /**
+     * Finalize event function
+     * The function "handleEmergencyEventDetected" in "MonitoringService" class call to this function
+     */
     fun finalizeEvent(eventId: String): Boolean {
         val audioRecordModel = audioController.stopRecording() ?: return false
         val transcribedText = audioController.convertAudioToText(audioRecordModel)
@@ -72,7 +79,6 @@ class EventService(private val context: Context) {
         val notifierController = NotifierController(context)
         val notifySuccess = notifierController.notifyContact(event)
 
-
         if (!notifySuccess) {
             Log.w("EventService", "Failed to notify contact")
         } else {
@@ -80,8 +86,6 @@ class EventService(private val context: Context) {
         }
 
         Log.d("EventService", "Finalized event: $event")
-
         return preferencesManager.saveEmergencyEvent(event)
     }
-
 }

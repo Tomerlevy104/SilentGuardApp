@@ -1,6 +1,6 @@
 package com.example.silentguardapp.model
 
-/*
+/**
 * Emergency Event Model
 */
 data class EventModel(

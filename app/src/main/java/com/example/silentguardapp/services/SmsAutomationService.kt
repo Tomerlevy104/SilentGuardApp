@@ -25,20 +25,22 @@ class SmsAutomationService : AccessibilityService() {
             (event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED &&
                     event.eventType != AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED)) return
 
+        // Ensure we're responding only when Samsung Messages is open
+        if (event.packageName != "com.samsung.android.messaging") return
+
         val rootNode = rootInActiveWindow ?: return
 
         // Search for the "Send" button in the SMS app
         val sendButtons = rootNode.findAccessibilityNodeInfosByViewId("com.samsung.android.messaging:id/send_button")
         for (node in sendButtons) {
             if (node.className == "android.widget.ImageButton" &&
-                node.isClickable && node.isEnabled &&
-                node.contentDescription == "שלח") {
+                node.isClickable && node.isEnabled) {
 
                 Log.d("SmsAutomationService", "Clicking SMS SEND button...")
                 node.performAction(AccessibilityNodeInfo.ACTION_CLICK)
                 hasClickedSend = true
 
-                // Try to go back to the app after sending (optional)
+                // Try to go back to the app after sending
                 Handler(Looper.getMainLooper()).postDelayed({
                     returnToApp()
                 }, 1500)
@@ -53,6 +55,7 @@ class SmsAutomationService : AccessibilityService() {
      */
     private fun returnToApp() {
         Log.d("SmsAutomationService", "Returning to SilentGuard app via global back action")
+        performGlobalAction(GLOBAL_ACTION_BACK)
         performGlobalAction(GLOBAL_ACTION_BACK)
         hasClickedSend = false
     }
