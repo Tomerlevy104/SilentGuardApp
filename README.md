@@ -1,4 +1,8 @@
-# &#x20;SilentGuard App - Mobile Security Final Project
+<p align="center">
+  <img src="screenshots/ic_speech_to_text.png" alt="App Icon" width="100" height="100"/>
+</p>
+
+# SilentGuard App - Mobile Security Final Project
 
 > **A noise-aware, auto-response security app for emergency scenarios**
 
@@ -21,7 +25,7 @@ Key goals:
 
 A full demonstration video of the app in action is available here:
 
-[**Watch the Demo**](https://your-link-here.com)&#x20;
+[**Watch the Demo**](https://your-link-here.com)
 
 ---
 
@@ -101,11 +105,10 @@ Below are key screens from the application:
 
 ### 🏠 Home Screen
 
-* Monitoring mode (active/inactive)
+* Monitoring mode (active)
 * Triggering audio analysis
 
-![Home Active](screenshots/Home%20page%20active.jpg)
-![Home Inactive](screenshots/Home%20page%20inactive.jpg)
+<img src="screenshots/Home%20page%20active.jpg" alt="Home Active" width="500"/>
 
 ### ⚙️ Settings Screen
 
@@ -113,16 +116,16 @@ Below are key screens from the application:
 * Emergency contact
 * Covert message configuration
 
-![Settings 1](screenshots/Settings%20screen%201.jpg)
-![Settings 2](screenshots/Settings%20screen%202.jpg)
+<img src="screenshots/Settings%20screen%201.jpg" alt="Settings 1" width="500"/>
+<img src="screenshots/Settings%20screen%202.jpg" alt="Settings 2" width="500"/>
 
 ### 🧩 Decoder Screen
 
 * Paste encrypted message and reveal decoded output
 
-![Decoder](screenshots/Decoder%20Screen.jpg)
+<img src="screenshots/Decoder%20Screen.jpg" alt="Decoder Screen" width="500"/>
 
-> ✅ **Tip:** Store screenshots in `/screenshots/`, use relative Markdown paths and resize to \~500px width for optimal GitHub display.
+> ✅ **Tip:** Store screenshots in `/screenshots/`, use relative Markdown paths and use HTML-style tags with width settings for cleaner layout.
 
 ---
 
@@ -151,13 +154,13 @@ app/src/main/assets/
 3. Build and run the project on a real device (not an emulator).
 4. On first launch, grant the following permissions:
 
-   * `RECORD_AUDIO`
-   * `SEND_SMS`
-   * `POST_NOTIFICATIONS`
-   * Accessibility access for:
+    * `RECORD_AUDIO`
+    * `SEND_SMS`
+    * `POST_NOTIFICATIONS`
+    * Accessibility access for:
 
-      * `GmailAutomationService`
-      * `SmsAutomationService`
+        * `GmailAutomationService`
+        * `SmsAutomationService`
 
 ---
 
