@@ -37,35 +37,35 @@ SilentGuard follows the **Model-View-Controller (MVC)** architecture:
 com.example.silentguardapp
 |
 |-- controller/       # Handles app logic and coordination between services and UI
-|   |-- AudioController.kt         # Manages audio recording lifecycle and buffer
-|   |-- EventController.kt         # Coordinates full flow from detection to delivery
-|   |-- MessageController.kt       # Creates messages and encodes using zero-width characters
-|   |-- MonitoringController.kt    # Monitors audio levels and triggers emergency events
-|   |-- NotifierController.kt      # Dispatches messages to contact (email/SMS)
+|   |-- AudioController.kt
+|   |-- EventController.kt
+|   |-- MessageController.kt
+|   |-- MonitoringController.kt
+|   |-- NotifierController.kt
 |
 |-- model/            # Pure data classes shared across layers
-|   |-- AudioRecordModel.kt        # Stores audio file path and duration
-|   |-- ContactModel.kt            # Stores contact name, phone, email
-|   |-- EncryptedMessageModel.kt   # Combines raw and encoded text
-|   |-- EventModel.kt              # Represents a complete emergency event
-|   |-- AppSettingsModel.kt        # Holds user-defined configuration
+|   |-- AudioRecordModel.kt
+|   |-- ContactModel.kt
+|   |-- EncryptedMessageModel.kt
+|   |-- EventModel.kt
+|   |-- AppSettingsModel.kt
 |
-|-- services/         # Background tasks, long-running actions
-|   |-- EventService.kt            # Orchestrates emergency event creation
-|   |-- GmailAutomationService.kt  # Automates Gmail UI to send email
-|   |-- SmsAutomationService.kt    # Automates Messages UI to send SMS
-|   |-- MessageService.kt          # Formats and encrypts messages
-|   |-- MonitoringService.kt       # Captures ambient sound and triggers controller
-|   |-- NotifierService.kt         # Routes final message to delivery method
+|-- services/         # Business logic and background execution
+|   |-- EventService.kt
+|   |-- GmailAutomationService.kt
+|   |-- SmsAutomationService.kt
+|   |-- MessageService.kt
+|   |-- MonitoringService.kt
+|   |-- NotifierService.kt
 |
 |-- utils/            # Shared logic across layers
-|   |-- PreferencesManager.kt      # Manages local storage of settings/events
-|   |-- SpeechToTextConverter.kt   # Integrates Google API for transcriptions
+|   |-- PreferencesManager.kt
+|   |-- SpeechToTextConverter.kt
 |
 |-- views/            # Fragments for each screen (UI only)
-|   |-- HomeFragment.kt            # Displays current status and buttons
-|   |-- SettingsFragment.kt        # UI for noise level, contact, message settings
-|   |-- DecoderFragment.kt         # UI to paste and decode received message
+|   |-- HomeFragment.kt
+|   |-- SettingsFragment.kt
+|   |-- DecoderFragment.kt
 |
 |-- res/layout/       # XML layout definitions
 |   |-- activity_main.xml
@@ -73,7 +73,7 @@ com.example.silentguardapp
 |   |-- fragment_settings.xml
 |   |-- fragment_decoder.xml
 |
-|-- MainActivity.kt   # Hosts navigation via BottomNavigationView
+|-- MainActivity.kt
 ```
 
 ---
@@ -101,14 +101,16 @@ To use Google Speech-to-Text:
 
 ## 📸 App Screenshots
 
-Below are key screens from the application:
-
 ### 🏠 Home Screen
 
 * Monitoring mode (active)
 * Triggering audio analysis
 
-<img src="screenshots/Home%20page%20active.jpg" alt="Home Active" width="500"/>
+<p align="center">
+  <img src="screenshots/Home%20page%20active.jpg" alt="Home Active" width="400"/>
+</p>
+
+---
 
 ### ⚙️ Settings Screen
 
@@ -116,14 +118,22 @@ Below are key screens from the application:
 * Emergency contact
 * Covert message configuration
 
-<img src="screenshots/Settings%20screen%201.jpg" alt="Settings 1" width="500"/>
-<img src="screenshots/Settings%20screen%202.jpg" alt="Settings 2" width="500"/>
+<p align="center">
+  <img src="screenshots/Settings%20screen%201.jpg" alt="Settings 1" width="400"/>
+</p>
+<p align="center">
+  <img src="screenshots/Settings%20screen%202.jpg" alt="Settings 2" width="400"/>
+</p>
+
+---
 
 ### 🧩 Decoder Screen
 
 * Paste encrypted message and reveal decoded output
 
-<img src="screenshots/Decoder%20Screen.jpg" alt="Decoder Screen" width="500"/>
+<p align="center">
+  <img src="screenshots/Decoder%20Screen.jpg" alt="Decoder Screen" width="400"/>
+</p>
 
 > ✅ **Tip:** Store screenshots in `/screenshots/`, use relative Markdown paths and use HTML-style tags with width settings for cleaner layout.
 
@@ -199,7 +209,7 @@ The app requests the following permissions to function securely:
 
 ---
 
-## 📅 License
+## 🗕️ License
 
 This project is for academic and demonstration purposes only. All rights reserved to the author.
 
