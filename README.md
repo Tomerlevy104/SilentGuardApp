@@ -25,7 +25,7 @@ Key goals:
 
 A full demonstration video of the app in action is available here:
 
-[**Watch the Demo**](demo/Video%20-%20SilentGuardApp.mp4)
+[**Watch the Demo**](demo/SilentGuard_Demo.mp4)
 
 ---
 
