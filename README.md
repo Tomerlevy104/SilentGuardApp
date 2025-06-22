@@ -1,8 +1,8 @@
-<p align="center">
-  <img src="screenshots/ic_speech_to_text.png" alt="App Icon" width="100" height="100"/>
-</p>
-
 # SilentGuard App - Mobile Security Final Project
+
+<p align="center">
+  <img src="screenshots/ic_speech_to_text.png" alt="App Icon" width="80" height="80"/>
+</p>
 
 > **A noise-aware, auto-response security app for emergency scenarios**
 
@@ -106,9 +106,7 @@ To use Google Speech-to-Text:
 * Monitoring mode (active)
 * Triggering audio analysis
 
-<p align="center">
-  <img src="screenshots/Home%20page%20active.jpg" alt="Home Active" width="400"/>
-</p>
+<img src="screenshots/Home%20page%20active.jpg" alt="Home Active" width="350"/>
 
 ---
 
@@ -118,12 +116,7 @@ To use Google Speech-to-Text:
 * Emergency contact
 * Covert message configuration
 
-<p align="center">
-  <img src="screenshots/Settings%20screen%201.jpg" alt="Settings 1" width="400"/>
-</p>
-<p align="center">
-  <img src="screenshots/Settings%20screen%202.jpg" alt="Settings 2" width="400"/>
-</p>
+<img src="screenshots/Settings%20screen%201.jpg" alt="Settings 1" width="350"/>
 
 ---
 
@@ -131,9 +124,7 @@ To use Google Speech-to-Text:
 
 * Paste encrypted message and reveal decoded output
 
-<p align="center">
-  <img src="screenshots/Decoder%20Screen.jpg" alt="Decoder Screen" width="400"/>
-</p>
+<img src="screenshots/Decoder%20Screen.jpg" alt="Decoder Screen" width="350"/>
 
 > ✅ **Tip:** Store screenshots in `/screenshots/`, use relative Markdown paths and use HTML-style tags with width settings for cleaner layout.
 
@@ -201,7 +192,7 @@ The app requests the following permissions to function securely:
 
 ---
 
-## 🚀 Future Improvements
+## 🌱 Future Improvements
 
 * Add support for multiple emergency contacts.
 * Use Firebase or external DB to sync events.
@@ -209,7 +200,7 @@ The app requests the following permissions to function securely:
 
 ---
 
-## 🗕️ License
+## 📄 License
 
 This project is for academic and demonstration purposes only. All rights reserved to the author.
 
