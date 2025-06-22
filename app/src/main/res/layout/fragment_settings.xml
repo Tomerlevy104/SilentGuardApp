@@ -20,7 +20,7 @@
             android:id="@+id/settingsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="App Settings"
+            android:text="@string/app_settings"
             android:textAppearance="?attr/textAppearanceHeadlineSmall"
             android:textStyle="bold"
             android:textColor="@android:color/black"
@@ -46,7 +46,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Noise Detection Sensitivity"
+                    android:text="@string/noise_detection_sensitivity"
                     android:textAppearance="?attr/textAppearanceTitleSmall"
                     android:textColor="@android:color/black"
                     android:layout_marginBottom="12dp" />
@@ -81,7 +81,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Emergency Contact"
+                    android:text="@string/emergency_contact"
                     android:textAppearance="?attr/textAppearanceTitleSmall"
                     android:textColor="@android:color/black"
                     android:layout_marginBottom="12dp" />
@@ -91,7 +91,7 @@
                     android:id="@+id/contactNameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Full Name"
+                    android:hint="@string/full_name"
                     style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -107,7 +107,7 @@
                     android:id="@+id/contactPhoneLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Phone Number"
+                    android:hint="@string/phone_number"
                     style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
                     android:layout_marginTop="8dp">
 
@@ -124,7 +124,7 @@
                     android:id="@+id/contactEmailLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email Address"
+                    android:hint="@string/email_address"
                     style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
                     android:layout_marginTop="8dp">
 
@@ -158,7 +158,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recording Duration (seconds)"
+                    android:text="@string/recording_duration_seconds"
                     android:textAppearance="?attr/textAppearanceTitleSmall"
                     android:textColor="@android:color/black"
                     android:layout_marginBottom="12dp" />
@@ -193,7 +193,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Covert Message"
+                    android:text="@string/covert_message"
                     android:textAppearance="?attr/textAppearanceTitleSmall"
                     android:textColor="@android:color/black"
                     android:layout_marginBottom="12dp" />
@@ -201,7 +201,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Message text"
+                    android:hint="@string/message_text"
                     style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -219,7 +219,7 @@
             android:id="@+id/saveSettingsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save Settings"
+            android:text="@string/save_settings"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             app:backgroundTint="@android:color/black"

@@ -57,7 +57,7 @@ class PreferencesManager(private val context: Context) {
     /**
      * Get default app settings
      */
-    private fun getDefaultAppSettings(): AppSettingsModel {
+     fun getDefaultAppSettings(): AppSettingsModel {
         return AppSettingsModel(
             noiseThreshold = 0.7f,
             recordingDuration = 30,
@@ -249,7 +249,7 @@ class PreferencesManager(private val context: Context) {
             val settings = loadAppSettings()
             val contact = settings.emergencyContact
             contact.name.isNotBlank() &&
-                    (!contact.phoneNumber.isNullOrBlank() || !contact.email.isNullOrBlank())
+            (!contact.phoneNumber.isNullOrBlank() && !contact.email.isNullOrBlank())
         } catch (e: Exception) {
             false
         }

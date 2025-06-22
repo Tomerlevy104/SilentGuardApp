@@ -22,5 +22,18 @@
     <string name="decrypted_output">Decrypted Output</string>
     <string name="accessibility_service_description">Silent email automation service using Gmail</string>
     <string name="sms_accessibility_service_description">Accessibility service for sending SMS silently</string>
+    <string name="send">send</string>
+    <string name="navigate_up">Navigate up</string>
+    <string name="message_text">Message text</string>
+    <string name="covert_message">Covert Message</string>
+    <string name="save_settings">Save Settings</string>
+    <string name="recording_duration_seconds">Recording Duration (seconds)</string>
+    <string name="email_address">Email Address</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="full_name">Full Name</string>
+    <string name="emergency_contact">Emergency Contact</string>
+    <string name="noise_detection_sensitivity">Noise Detection Sensitivity</string>
+    <string name="app_settings">App Settings</string>
+    <string name="fast_share">שיתוף מהיר</string>
 
 </resources>

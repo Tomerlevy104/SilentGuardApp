@@ -17,7 +17,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.silentguardapp.R
 import com.example.silentguardapp.controller.MonitoringController
-import com.example.silentguardapp.services.GmailAutomationService
 import com.example.silentguardapp.utils.PreferencesManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
@@ -31,15 +30,14 @@ class HomeFragment : Fragment() {
     private lateinit var btnStopMonitoring: MaterialButton
     private lateinit var preferencesManager: PreferencesManager
     private var hasPromptedAccessibility = false
-    private var currentThreshold = 0.7f
 
     // Permission launcher for microphone access
     private val requestMicPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
-        if (!isGranted) {
-            Toast.makeText(requireContext(), getString(R.string.microphone_permission_is_required), Toast.LENGTH_LONG).show()
-        }
+//        if (!isGranted) {
+//            Toast.makeText(requireContext(), getString(R.string.microphone_permission_is_required), Toast.LENGTH_LONG).show()
+//        }
         checkAllPermissionsAndStartMonitoring()
     }
 
@@ -117,19 +115,20 @@ class HomeFragment : Fragment() {
             true
         }
 
-        // ✅ Check SMS permission
+        // Check SMS permission
         val hasSmsPermission = ContextCompat.checkSelfPermission(
             requireContext(),
             Manifest.permission.SEND_SMS
         ) == PackageManager.PERMISSION_GRANTED
 
+        // Check contact settings
+
+        val hasContact = preferencesManager.hasEmergencyContact()
+        Log.d("HomeFragment", "Has contact: $hasContact")
+
+        // Permission checks
         when {
             !hasMicPermission -> {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.app_need_mic_permission_for_detect_emergency_event),
-                    Toast.LENGTH_LONG
-                ).show()
                 requestMicPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
             }
 
@@ -137,18 +136,24 @@ class HomeFragment : Fragment() {
                 requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
 
-            // ✅ Request SMS permission if missing
             !hasSmsPermission -> {
                 requestSmsPermissionLauncher.launch(Manifest.permission.SEND_SMS)
             }
 
-            // ✅ Check accessibility service state
+            !hasContact -> {
+                Toast.makeText(
+                    requireContext(),
+                    "Emergency contact must have at least phone number or email.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
             !isAccessibilityServiceEnabled() -> {
                 if (!hasPromptedAccessibility) {
                     hasPromptedAccessibility = true
                     Toast.makeText(
                         requireContext(),
-                        "Accessibility service is required for automatic email sending.",
+                        "Accessibility service is required for automatic email/SMS sending.",
                         Toast.LENGTH_LONG
                     ).show()
 
@@ -158,11 +163,12 @@ class HomeFragment : Fragment() {
             }
 
             else -> {
-                // ✅ All permissions are granted – proceed
+                // All permissions and settings are valid – proceed
                 startMonitoringProcess()
             }
         }
     }
+
 
     /**
      * Checks if the GmailAutomationService accessibility service is enabled.

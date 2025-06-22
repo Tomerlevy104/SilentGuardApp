@@ -24,10 +24,8 @@ class SettingsFragment : Fragment() {
     private lateinit var contactPhoneInput: TextInputEditText
     private lateinit var contactEmailInput: TextInputEditText
     private lateinit var coverMessageInput: TextInputEditText
-
     private lateinit var contactEmailLayout: TextInputLayout
     private lateinit var contactPhoneLayout: TextInputLayout
-
     private lateinit var preferencesManager: PreferencesManager
 
     override fun onCreateView(

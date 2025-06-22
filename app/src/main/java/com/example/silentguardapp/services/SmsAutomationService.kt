@@ -27,7 +27,7 @@ class SmsAutomationService : AccessibilityService() {
 
         val rootNode = rootInActiveWindow ?: return
 
-        // Step 1: Search for the "Send" button in the SMS app
+        // Search for the "Send" button in the SMS app
         val sendButtons = rootNode.findAccessibilityNodeInfosByViewId("com.samsung.android.messaging:id/send_button")
         for (node in sendButtons) {
             if (node.className == "android.widget.ImageButton" &&
@@ -38,7 +38,7 @@ class SmsAutomationService : AccessibilityService() {
                 node.performAction(AccessibilityNodeInfo.ACTION_CLICK)
                 hasClickedSend = true
 
-                // Step 2: Try to go back to the app after sending (optional)
+                // Try to go back to the app after sending (optional)
                 Handler(Looper.getMainLooper()).postDelayed({
                     returnToApp()
                 }, 1500)
