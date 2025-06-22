@@ -1,10 +1,10 @@
 # SilentGuard App - Mobile Security Final Project
 
-> **A noise-aware, auto-response security app for emergency scenarios**
-
 <p align="center">
   <img src="screenshots/ic_speech_to_text.png" alt="App Icon" width="80" height="80"/>
 </p>
+
+> **A noise-aware, auto-response security app for emergency scenarios**
 
 ---
 
@@ -106,7 +106,7 @@ To use Google Speech-to-Text:
 * Monitoring mode (active)
 * Triggering audio analysis
 
-<img src="screenshots/Home%20page%20active.jpg" alt="Home Active" width="350" align="left"/>
+<img src="screenshots/Home%20page%20active.jpg" alt="Home Active" width="350"/>
 
 ---
 
@@ -116,7 +116,7 @@ To use Google Speech-to-Text:
 * Emergency contact
 * Covert message configuration
 
-<img src="screenshots/Settings%20screen%201.jpg" alt="Settings 1" width="350" align="left"/>
+<img src="screenshots/Settings%20screen%201.jpg" alt="Settings 1" width="350"/>
 
 ---
 
@@ -124,9 +124,7 @@ To use Google Speech-to-Text:
 
 * Paste encrypted message and reveal decoded output
 
-<img src="screenshots/Decoder%20Screen.jpg" alt="Decoder Screen" width="350" align="left"/>
-
-> ✅ **Tip:** Store screenshots in `/screenshots/`, use relative Markdown paths and use HTML-style tags with width settings for cleaner layout.
+<img src="screenshots/Decoder%20Screen.jpg" alt="Decoder Screen" width="350"/>
 
 ---
 
@@ -167,20 +165,15 @@ app/src/main/assets/
 
 ## 💡 Technologies Used
 
-<table align="left">
-<thead align="left">
-<tr><th>Purpose</th><th>Technology</th></tr>
-</thead>
-<tbody align="left">
-<tr><td>Programming Language</td><td>Kotlin</td></tr>
-<tr><td>Architecture</td><td>MVC</td></tr>
-<tr><td>Speech Recognition</td><td>Google Cloud Speech-to-Text API</td></tr>
-<tr><td>Storage</td><td>SharedPreferences (Local JSON)</td></tr>
-<tr><td>UI Toolkit</td><td>Material Design 3</td></tr>
-<tr><td>Background Execution</td><td>Foreground Service, Coroutine</td></tr>
-<tr><td>Message Sending</td><td>AccessibilityService, Intents</td></tr>
-</tbody>
-</table>
+| Purpose              | Technology                      |
+| -------------------- | ------------------------------- |
+| Programming Language | Kotlin                          |
+| Architecture         | MVC                             |
+| Speech Recognition   | Google Cloud Speech-to-Text API |
+| Storage              | SharedPreferences (Local JSON)  |
+| UI Toolkit           | Material Design 3               |
+| Background Execution | Foreground Service, Coroutine   |
+| Message Sending      | AccessibilityService, Intents   |
 
 ---
 
