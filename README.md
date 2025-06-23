@@ -17,7 +17,6 @@ Key goals:
 * Trigger response **only** when noise exceeds a defined threshold.
 * **Encrypt** sensitive transcribed data inside a cover message.
 * **Send notifications silently** using Android's Accessibility Services.
-* Maintain user safety through automation and discretion.
 
 ---
 
