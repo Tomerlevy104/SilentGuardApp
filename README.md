@@ -193,7 +193,6 @@ The app requests the following permissions to function securely:
 
 * Add support for multiple emergency contacts.
 * Use Firebase or external DB to sync events.
-* Use biometric authentication for accessing app settings.
 
 ---
 
